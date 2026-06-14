@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Sabeera Khanam ✨ ERP-to-ServiceNow Bridge Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Pacifico&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════
+   KAWAII LUXURY — ONE VISUAL LANGUAGE
+═══════════════════════════════════════ */
+:root{
+  --pink-deep:  #EC4899;
+  --pink-mid:   #F472B6;
+  --pink-light: #FBA8D0;
+  --blush:      #FFD6E7;
+  --blush-lt:   #FFE8F2;
+  --lavender:   #E9D5FF;
+  --lav-mid:    #D8B4FE;
+  --lav-deep:   #C084FC;
+  --peach:      #FFE7D6;
+  --peach-mid:  #FDBA96;
+  --cream:      #FFF9F5;
+  --cream-2:    #FFF4EE;
+  --rose-gold:  #D4A0B0;
+  --rg-deep:    #BE8A9C;
+  --ink:        #1E0A1B;
+  --ink-mid:    #5C3A56;
+  --ink-soft:   #9B7A94;
+  --white:      #FFFFFF;
+  --glass:      rgba(255,255,255,0.72);
+  --glass2:     rgba(255,255,255,0.48);
+  --sh-s:       0 4px 20px rgba(236,72,153,0.12);
+  --sh-m:       0 8px 40px rgba(236,72,153,0.18);
+  --sh-l:       0 20px 60px rgba(236,72,153,0.25);
+  --r:          20px; --r-sm:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--cream);color:var(--ink);
+  overflow-x:hidden;line-height:1.6;cursor:none;
+}
+a{text-decoration:none;color:inherit}
+
+/* ═══════════════════════════════════════
+   CURSOR
+═══════════════════════════════════════ */
+#cr{position:fixed;width:38px;height:38px;border:2px solid rgba(236,72,153,0.6);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform .2s,border-color .3s,width .2s,height .2s;mix-blend-mode:multiply}
+#cd{position:fixed;width:8px;height:8px;background:var(--pink-deep);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%)}
+body.hovering #cr{width:56px;height:56px;border-color:var(--pink-deep);background:rgba(236,72,153,0.08)}
+
+/* ═══════════════════════════════════════
+   NAV
+═══════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:600;
+  background:rgba(255,249,245,0.9);
+  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+  border-bottom:1px solid rgba(251,168,208,0.2);
+  box-shadow:0 2px 24px rgba(236,72,153,0.06);
+  transition:all .3s;
+}
+.nav-in{max-width:1160px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:64px}
+.nav-logo{font-family:'Pacifico',cursive;font-size:21px;background:linear-gradient(135deg,var(--pink-deep),var(--lav-deep));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:26px;align-items:center}
+.nav-links a{font-size:12.5px;font-weight:600;color:var(--ink-mid);transition:color .2s;letter-spacing:.02em}
+.nav-links a:hover,.nav-links a.active{color:var(--pink-deep)}
+.nav-cta{
+  background:linear-gradient(135deg,var(--pink-deep),var(--lav-deep))!important;
+  color:#fff!important;padding:8px 22px;border-radius:100px;
+  font-weight:700!important;box-shadow:0 4px 18px rgba(236,72,153,0.32);
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s!important;
+}
+.nav-cta:hover{transform:translateY(-2px) scale(1.04)!important;box-shadow:0 8px 28px rgba(236,72,153,0.42)!important}
+
+/* ═══════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════ */
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+section{padding:104px 0;position:relative}
+
+/* ═══════════════════════════════════════
+   SECTION BACKGROUNDS — SEAMLESS FLOW
+═══════════════════════════════════════ */
+#hero{
+  min-height:100vh;padding-top:64px;
+  background:linear-gradient(145deg,#FFF0F8 0%,#FADADF 18%,#EDD8FF 45%,#D4BCFF 70%,#C8B2FF 100%);
+  display:flex;align-items:center;overflow:hidden;
+}
+#about{background:linear-gradient(170deg,#CAB5FF 0%,#FFEBF5 22%,var(--cream) 55%,var(--peach) 100%)}
+#experience{background:linear-gradient(160deg,var(--peach) 0%,#FDE8F6 38%,var(--lavender) 100%)}
+#skills{background:linear-gradient(155deg,var(--lavender) 0%,var(--blush) 50%,var(--peach) 100%)}
+#projects{background:linear-gradient(160deg,var(--peach) 0%,#FFEEF8 45%,var(--cream) 100%)}
+#certifications{background:linear-gradient(155deg,var(--cream) 0%,var(--blush) 40%,var(--lavender) 100%)}
+#education{background:linear-gradient(160deg,var(--lavender) 0%,#F5EAFF 35%,var(--blush-lt) 65%,var(--peach) 100%)}
+#contact{background:linear-gradient(155deg,var(--peach) 0%,#FAD4EC 35%,#C8A8F0 70%,#A78BFA 100%)}
+
+/* ═══════════════════════════════════════
+   EYEBROW + TITLES — CONSISTENT
+═══════════════════════════════════════ */
+.eyebrow{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:10.5px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 18px;border-radius:100px;
+  background:rgba(255,255,255,0.75);border:1px solid rgba(251,168,208,0.45);
+  color:var(--pink-deep);backdrop-filter:blur(10px);
+  margin-bottom:16px;box-shadow:var(--sh-s);
+}
+.section-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(26px,3.8vw,42px);font-weight:700;
+  color:var(--ink);line-height:1.1;letter-spacing:-.025em;margin-bottom:12px;
+}
+.section-title .g{
+  background:linear-gradient(135deg,var(--pink-deep),var(--lav-deep));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.section-sub{
+  font-size:15.5px;color:var(--ink-mid);max-width:560px;line-height:1.75;margin-bottom:52px;
+}
+
+/* ═══════════════════════════════════════
+   GLASS CARD BASE
+═══════════════════════════════════════ */
+.gc{
+  background:var(--glass);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  border:1.5px solid rgba(255,255,255,0.85);border-radius:var(--r);
+  box-shadow:var(--sh-m);
+  transition:transform .32s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;
+}
+.gc:hover{transform:translateY(-7px) scale(1.01);box-shadow:var(--sh-l)}
+
+/* ═══════════════════════════════════════
+   PARTICLE CANVAS
+═══════════════════════════════════════ */
+#pc{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.55}
+
+/* ═══════════════════════════════════════
+   HERO
+═══════════════════════════════════════ */
+.hero-grid{
+  position:relative;z-index:2;
+  display:grid;grid-template-columns:1fr 400px;gap:60px;align-items:center;
+  max-width:1160px;margin:0 auto;padding:60px 28px 80px;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--glass);border:1px solid rgba(251,168,208,0.45);
+  border-radius:100px;padding:8px 22px 8px 14px;
+  margin-bottom:26px;backdrop-filter:blur(14px);box-shadow:var(--sh-s);
+}
+.bp{width:9px;height:9px;border-radius:50%;background:var(--pink-deep);box-shadow:0 0 0 3px rgba(236,72,153,.25);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(236,72,153,.25)}50%{box-shadow:0 0 0 8px rgba(236,72,153,.06)}}
+.badge-t{font-size:12px;font-weight:700;color:var(--pink-deep);letter-spacing:.04em}
+.h-name{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(48px,7vw,82px);font-weight:700;
+  color:var(--ink);line-height:.98;letter-spacing:-.04em;margin-bottom:8px;
+}
+.h-name .pk{
+  background:linear-gradient(135deg,var(--pink-deep) 0%,var(--lav-deep) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.h-role{font-size:clamp(14px,1.9vw,18px);font-weight:600;color:var(--rg-deep);margin-bottom:22px;letter-spacing:.01em}
+.h-bio{font-size:15px;line-height:1.8;color:var(--ink-mid);max-width:510px;margin-bottom:34px}
+.h-bio strong{color:var(--ink);font-weight:700}
+.h-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px}
+.btn-main{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--pink-deep),var(--lav-deep));
+  color:#fff;padding:14px 32px;border-radius:100px;
+  font-weight:700;font-size:14.5px;
+  box-shadow:0 6px 26px rgba(236,72,153,.36);
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .28s;cursor:none;
+}
+.btn-main:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 12px 36px rgba(236,72,153,.46)}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--glass);border:1.5px solid rgba(212,160,176,.45);
+  color:var(--ink);padding:13px 30px;border-radius:100px;
+  font-weight:700;font-size:14.5px;backdrop-filter:blur(14px);
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1),background .2s;cursor:none;
+}
+.btn-ghost:hover{transform:translateY(-3px);background:rgba(255,255,255,.9)}
+.h-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:rgba(212,160,176,.22);border-radius:18px;overflow:hidden;box-shadow:var(--sh-s);
+}
+.hs{background:var(--glass);backdrop-filter:blur(18px);padding:20px 14px;text-align:center}
+.hs-n{
+  font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;
+  background:linear-gradient(135deg,var(--pink-deep),var(--lav-deep));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;margin-bottom:3px;
+}
+.hs-l{font-size:10.5px;color:var(--ink-soft);letter-spacing:.07em;text-transform:uppercase}
+/* hero right */
+.h-right{display:flex;flex-direction:column;align-items:center;gap:16px}
+.av-wrap{
+  width:272px;height:272px;border-radius:50%;padding:4px;
+  background:linear-gradient(135deg,var(--pink-deep),var(--lav-deep),var(--blush));
+  box-shadow:0 22px 64px rgba(212,160,176,.44);
+  animation:floatAv 4.5s ease-in-out infinite;
+}
+@keyframes floatAv{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+.av-in{
+  width:100%;height:100%;border-radius:50%;
+  background:linear-gradient(145deg,#FAD4EC,#ECD8FF);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk',sans-serif;font-size:76px;font-weight:700;
+  color:var(--pink-deep);letter-spacing:-3px;
+}
+.h-pill{
+  display:flex;align-items:center;gap:8px;padding:9px 20px;border-radius:100px;
+  background:var(--glass);border:1px solid rgba(255,255,255,.85);
+  font-size:12px;font-weight:700;backdrop-filter:blur(14px);
+  box-shadow:var(--sh-s);color:var(--ink-mid);
+}
+
+/* ═══════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════ */
+.ab-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.ab-text p{font-size:15px;line-height:1.82;color:var(--ink-mid);margin-bottom:15px}
+.ab-text p strong{color:var(--ink);font-weight:700}
+.vg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px}
+.vc{
+  border-radius:var(--r-sm);padding:20px;
+  border:1.5px solid rgba(255,255,255,.9);
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;
+  box-shadow:0 3px 16px rgba(236,72,153,.08);
+}
+.vc:hover{transform:translateY(-5px);box-shadow:0 10px 32px rgba(236,72,153,.16)}
+.vc1{background:linear-gradient(145deg,#FFF0F8,var(--blush))}
+.vc2{background:linear-gradient(145deg,#F8F0FF,var(--lavender))}
+.vc3{background:linear-gradient(145deg,#FFF6F0,var(--peach))}
+.vc4{background:linear-gradient(145deg,#FFF0F3,#FECDD3)}
+.vi{font-size:26px;margin-bottom:9px}
+.vt{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13.5px;margin-bottom:5px}
+.vc1 .vt{color:#9D174D} .vc2 .vt{color:#6D28D9} .vc3 .vt{color:#C2410C} .vc4 .vt{color:#9F1239}
+.vd{font-size:12.5px;line-height:1.56;font-weight:500}
+.vc1 .vd{color:#831843} .vc2 .vd{color:#5B21B6} .vc3 .vd{color:#9A3412} .vc4 .vd{color:#881337}
+
+.info-card{
+  padding:26px;
+  background:linear-gradient(145deg,rgba(255,255,255,.92),rgba(255,244,238,.8));
+  border-radius:var(--r);border:1.5px solid rgba(255,255,255,.9);box-shadow:var(--sh-m);
+}
+.ir{
+  display:flex;align-items:center;gap:12px;padding:10px 0;
+  border-bottom:1px solid rgba(251,168,208,.2);font-size:13.5px;
+}
+.ir:last-child{border-bottom:none}
+.il{width:136px;font-size:10.5px;font-weight:800;color:var(--rose-gold);text-transform:uppercase;letter-spacing:.08em;flex-shrink:0}
+.iv{color:var(--ink);font-weight:600} .iv a{color:var(--pink-deep)}
+.fc{
+  margin-top:13px;padding:22px;
+  background:linear-gradient(145deg,#FFF0F8,var(--blush));
+  border-radius:var(--r);border:1.5px solid rgba(251,168,208,.4);box-shadow:var(--sh-s);
+}
+.fc-t{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;color:var(--pink-deep);margin-bottom:12px}
+.fi{display:flex;align-items:center;gap:10px;font-size:13.5px;color:#9D174D;font-weight:600;padding:6px 0}
+.fa{color:var(--pink-deep);font-size:13px}
+
+/* ═══════════════════════════════════════
+   EXPERIENCE TIMELINE
+═══════════════════════════════════════ */
+.tl{position:relative;padding-left:36px}
+.tl::before{
+  content:'';position:absolute;left:7px;top:12px;bottom:12px;width:2px;
+  background:linear-gradient(to bottom,var(--pink-deep),var(--lav-mid),rgba(233,213,255,.25));
+}
+.tli{position:relative;margin-bottom:38px}
+.tli:last-child{margin-bottom:0}
+.tl-dot{
+  position:absolute;left:-32px;top:14px;
+  width:16px;height:16px;border-radius:50%;
+  border:3px solid #fff;background:var(--pink-deep);
+  box-shadow:0 0 0 3px rgba(236,72,153,.3),var(--sh-s);
+}
+.tl-card{
+  padding:28px 30px;
+  background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(255,249,245,.75));
+  border-radius:var(--r);border:1.5px solid rgba(255,255,255,.92);box-shadow:var(--sh-m);
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;
+}
+.tl-card:hover{transform:translateX(5px);box-shadow:var(--sh-l)}
+.tl-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.tl-role{font-family:'Space Grotesk',sans-serif;font-size:15.5px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.tl-co{font-size:13.5px;font-weight:700;color:var(--pink-deep);margin-bottom:2px}
+.tl-loc{font-size:12px;color:var(--ink-soft)}
+.tl-period{
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:500;
+  background:linear-gradient(135deg,rgba(255,214,231,.8),rgba(233,213,255,.8));
+  color:var(--ink-mid);padding:6px 14px;border-radius:100px;white-space:nowrap;flex-shrink:0;
+  border:1px solid rgba(255,255,255,.8);
+}
+.tl-ul{list-style:none;margin-bottom:16px}
+.tl-ul li{
+  padding:5px 0 5px 20px;position:relative;
+  font-size:13.5px;color:var(--ink-mid);line-height:1.65;
+}
+.tl-ul li::before{content:'✦';position:absolute;left:0;color:var(--pink-light);font-size:10px;top:7px}
+.tl-ul li strong{color:var(--ink);font-weight:700}
+.tl-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tb{
+  font-size:10.5px;font-weight:700;padding:4px 12px;border-radius:100px;
+  background:rgba(255,214,231,.6);color:var(--pink-deep);
+  border:1px solid rgba(251,168,208,.4);letter-spacing:.02em;
+}
+.tl-c2 .tb{background:rgba(233,213,255,.6);color:#7C3AED;border-color:rgba(196,132,252,.4)}
+.tl-c3 .tb{background:rgba(255,231,214,.6);color:#C2410C;border-color:rgba(253,186,150,.4)}
+
+/* ═══════════════════════════════════════
+   SKILLS
+═══════════════════════════════════════ */
+.sk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.sk-card{
+  border-radius:var(--r);padding:26px;
+  background:var(--glass);backdrop-filter:blur(20px);
+  border:1.5px solid rgba(255,255,255,.85);box-shadow:var(--sh-m);
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;
+}
+.sk-card:hover{transform:translateY(-6px);box-shadow:var(--sh-l)}
+.sk-c1{background:linear-gradient(145deg,rgba(255,240,248,.9),rgba(255,214,231,.7))}
+.sk-c2{background:linear-gradient(145deg,rgba(248,240,255,.9),rgba(233,213,255,.7))}
+.sk-c3{background:linear-gradient(145deg,rgba(255,246,240,.9),rgba(255,231,214,.7))}
+.sk-c4{background:linear-gradient(145deg,rgba(255,245,255,.9),rgba(251,207,232,.7))}
+.sk-c5{background:linear-gradient(145deg,rgba(240,250,255,.9),rgba(219,234,254,.7))}
+.sk-c6{background:linear-gradient(145deg,rgba(255,253,240,.9),rgba(254,249,195,.7))}
+.sk-icon{font-size:28px;margin-bottom:10px}
+.sk-title{font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:16px}
+.sk-item{margin-bottom:10px}
+.sk-nm{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;margin-bottom:5px}
+.sk-nm span:first-child{color:var(--ink-mid);font-weight:600}
+.sk-pct{font-size:10px;font-weight:800;color:var(--pink-deep);text-transform:uppercase;letter-spacing:.06em}
+.sk-bar{height:5px;background:rgba(255,255,255,.6);border-radius:100px;overflow:hidden}
+.sk-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--pink-deep),var(--lav-deep));transition:width 1.4s cubic-bezier(.4,0,.2,1)}
+.sk-c2 .sk-fill{background:linear-gradient(90deg,var(--lav-deep),#8B5CF6)}
+.sk-c3 .sk-fill{background:linear-gradient(90deg,#FB923C,#F97316)}
+.sk-c4 .sk-fill{background:linear-gradient(90deg,var(--pink-deep),var(--lav-mid))}
+.sk-c5 .sk-fill{background:linear-gradient(90deg,#3B82F6,#6366F1)}
+.sk-c6 .sk-fill{background:linear-gradient(90deg,#F59E0B,#EAB308)}
+.sk-tags{display:flex;flex-wrap:wrap;gap:7px}
+.sk-tag{font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;background:rgba(255,255,255,.7);color:var(--ink-mid);border:1px solid rgba(255,255,255,.9)}
+
+/* ═══════════════════════════════════════
+   PROJECTS
+═══════════════════════════════════════ */
+.pj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pj-card{
+  border-radius:var(--r);overflow:hidden;box-shadow:var(--sh-m);
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;
+  display:flex;flex-direction:column;
+}
+.pj-card:hover{transform:translateY(-8px);box-shadow:var(--sh-l)}
+.pj-top{height:5px}
+.pj-body{padding:26px;flex:1;display:flex;flex-direction:column;gap:6px}
+.pc1{background:linear-gradient(160deg,#FFF0F8,var(--blush))}
+.pc1 .pj-top{background:linear-gradient(90deg,var(--pink-deep),var(--pink-mid))}
+.pc1 .pj-num{color:var(--pink-light);font-weight:700}
+.pc1 .pj-title{color:#9D174D}
+.pc1 .pj-client{color:var(--pink-deep)}
+.pc1 .pj-impact{background:rgba(236,72,153,.08);border:1px solid rgba(236,72,153,.22);color:#9D174D}
+.pc1 .pj-tag{background:rgba(236,72,153,.1);color:#BE185D;border:1px solid rgba(236,72,153,.22)}
+.pc2{background:linear-gradient(160deg,#F5F0FF,var(--lavender))}
+.pc2 .pj-top{background:linear-gradient(90deg,var(--lav-deep),#8B5CF6)}
+.pc2 .pj-num{color:var(--lav-mid);font-weight:700}
+.pc2 .pj-title{color:#5B21B6}
+.pc2 .pj-client{color:#7C3AED}
+.pc2 .pj-impact{background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.22);color:#5B21B6}
+.pc2 .pj-tag{background:rgba(139,92,246,.1);color:#6D28D9;border:1px solid rgba(139,92,246,.22)}
+.pc3{background:linear-gradient(160deg,#FFF6F0,var(--peach))}
+.pc3 .pj-top{background:linear-gradient(90deg,#FB923C,#F97316)}
+.pc3 .pj-num{color:#FDBA74;font-weight:700}
+.pc3 .pj-title{color:#9A3412}
+.pc3 .pj-client{color:#EA580C}
+.pc3 .pj-impact{background:rgba(234,88,12,.08);border:1px solid rgba(234,88,12,.22);color:#9A3412}
+.pc3 .pj-tag{background:rgba(234,88,12,.1);color:#9A3412;border:1px solid rgba(234,88,12,.22)}
+.pj-num{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.pj-title{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;line-height:1.25}
+.pj-client{font-size:12px;font-weight:700;margin-bottom:4px}
+.pj-lbl{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-soft);margin-top:6px}
+.pj-txt{font-size:13px;color:var(--ink-mid);line-height:1.62;font-weight:500}
+.pj-impact{font-size:12px;font-weight:700;padding:8px 14px;border-radius:10px;margin:8px 0}
+.pj-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:8px}
+.pj-tag{font-size:10.5px;font-weight:700;padding:3px 11px;border-radius:100px}
+
+/* ═══════════════════════════════════════
+   CERTIFICATIONS
+═══════════════════════════════════════ */
+.cert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.cc{
+  border-radius:var(--r);overflow:hidden;border:1.5px solid rgba(255,255,255,.88);
+  box-shadow:var(--sh-s);transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;
+  display:flex;flex-direction:column;
+}
+.cc:hover{transform:translateY(-5px);box-shadow:var(--sh-m)}
+.c-bar{height:4px}
+.c-in{display:flex;align-items:flex-start;gap:14px;padding:16px 18px 15px}
+.c-ico{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.c-name{font-weight:700;font-size:12.5px;line-height:1.35;margin-bottom:2px}
+.c-iss{font-size:11px;font-weight:700;margin-bottom:2px}
+.c-dt{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-soft)}
+.c-badge{display:inline-block;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 10px;border-radius:100px;margin-top:4px}
+/* cert color themes — all pastel */
+.ct1{background:linear-gradient(145deg,#FFF0F8,#FFE0F2)}
+.ct1 .c-bar{background:linear-gradient(90deg,var(--pink-deep),var(--pink-mid))}
+.ct1 .c-ico{background:rgba(236,72,153,.1)}
+.ct1 .c-name{color:#9D174D} .ct1 .c-iss{color:var(--pink-deep)}
+.ct2{background:linear-gradient(145deg,#F5F0FF,#EDE0FF)}
+.ct2 .c-bar{background:linear-gradient(90deg,var(--lav-deep),#A78BFA)}
+.ct2 .c-ico{background:rgba(192,132,252,.12)}
+.ct2 .c-name{color:#5B21B6} .ct2 .c-iss{color:#7C3AED}
+.ct3{background:linear-gradient(145deg,#FFF6F0,#FFE8D6)}
+.ct3 .c-bar{background:linear-gradient(90deg,#FB923C,#FDBA74)}
+.ct3 .c-ico{background:rgba(251,146,60,.12)}
+.ct3 .c-name{color:#9A3412} .ct3 .c-iss{color:#EA580C}
+.ct4{background:linear-gradient(145deg,#F0FEF7,#D1FAE5)}
+.ct4 .c-bar{background:linear-gradient(90deg,#10B981,#34D399)}
+.ct4 .c-ico{background:rgba(16,185,129,.1)}
+.ct4 .c-name{color:#065F46} .ct4 .c-iss{color:#059669}
+.ct5{background:linear-gradient(145deg,#FFF0F3,#FFE0E6)}
+.ct5 .c-bar{background:linear-gradient(90deg,#BE123C,#FB7185)}
+.ct5 .c-ico{background:rgba(190,18,60,.1)}
+.ct5 .c-name{color:#881337} .ct5 .c-iss{color:#BE123C}
+.ct6{background:linear-gradient(145deg,#EFF8FF,#DBEAFE)}
+.ct6 .c-bar{background:linear-gradient(90deg,#2563EB,#60A5FA)}
+.ct6 .c-ico{background:rgba(37,99,235,.1)}
+.ct6 .c-name{color:#1E3A8A} .ct6 .c-iss{color:#2563EB}
+.ct7{background:linear-gradient(145deg,#FFFBEB,#FEF3C7)}
+.ct7 .c-bar{background:linear-gradient(90deg,#D97706,#FCD34D)}
+.ct7 .c-ico{background:rgba(217,119,6,.1)}
+.ct7 .c-name{color:#78350F} .ct7 .c-iss{color:#D97706}
+.cb-ok{background:rgba(16,185,129,.12);color:#065F46;border:1px solid rgba(16,185,129,.25)}
+.cb-wip{background:rgba(251,146,60,.12);color:#9A3412;border:1px solid rgba(251,146,60,.25)}
+
+/* ═══════════════════════════════════════
+   EDUCATION
+═══════════════════════════════════════ */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.edu-card{
+  border-radius:var(--r);overflow:hidden;
+  border:1.5px solid rgba(255,255,255,.88);box-shadow:var(--sh-m);
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.edu-card:hover{transform:translateY(-6px)}
+.edu-top{height:5px}
+.edu-body{padding:28px}
+.eu1{background:linear-gradient(145deg,#FDF4FF,#FAE8FF)}
+.eu1 .edu-top{background:linear-gradient(90deg,#A855F7,#E879F9)}
+.eu1 .edu-deg{color:#6B21A8} .eu1 .edu-inst{color:#A855F7}
+.eu1 .edu-yr{color:#C084FC}
+.eu1 .gpa{background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.28);color:#7C3AED}
+.eu1 .edu-spec{color:#7E22CE}
+.eu2{background:linear-gradient(145deg,#FFF0F8,#FFD6E7)}
+.eu2 .edu-top{background:linear-gradient(90deg,var(--pink-deep),var(--pink-mid))}
+.eu2 .edu-deg{color:#9D174D} .eu2 .edu-inst{color:var(--pink-deep)}
+.eu2 .edu-yr{color:var(--pink-light)}
+.eu2 .gpa{background:rgba(236,72,153,.1);border:1px solid rgba(236,72,153,.28);color:#BE185D}
+.eu2 .edu-spec{color:#9D174D}
+.edu-deg{font-family:'Space Grotesk',sans-serif;font-size:15.5px;font-weight:700;margin-bottom:4px}
+.edu-inst{font-size:13px;font-weight:700;margin-bottom:3px}
+.edu-yr{font-family:'JetBrains Mono',monospace;font-size:11px;margin-bottom:14px}
+.gpa{display:inline-flex;align-items:center;gap:6px;border-radius:100px;padding:5px 16px;font-size:13px;font-weight:800}
+.edu-spec{font-size:13px;margin-top:10px;line-height:1.55;font-weight:500}
+
+/* ═══════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════ */
+.ct-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:32px}
+.ct-wrap .section-title{color:#fff}
+.ct-wrap .eyebrow{background:rgba(255,255,255,.22);color:#fff;border-color:rgba(255,255,255,.3)}
+.ct-sub{font-size:16px;color:rgba(255,255,255,.82);max-width:480px;line-height:1.78}
+.ct-sub strong{color:#fff}
+.c-links{display:flex;gap:13px;flex-wrap:wrap;justify-content:center}
+.c-link{
+  display:flex;align-items:center;gap:9px;
+  background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.35);
+  border-radius:100px;padding:13px 24px;
+  color:#fff;font-weight:700;font-size:13.5px;
+  backdrop-filter:blur(14px);cursor:none;
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);
+}
+.c-link:hover{background:rgba(255,255,255,.28);transform:translateY(-3px) scale(1.04);box-shadow:0 10px 28px rgba(0,0,0,.14)}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+footer{
+  background:linear-gradient(135deg,#A78BFA,var(--pink-mid));
+  padding:28px 0;text-align:center;
+}
+.ft-n{font-family:'Pacifico',cursive;font-size:18px;color:#fff;margin-bottom:5px}
+.ft-s{font-size:12px;color:rgba(255,255,255,.75)}
+.ft-s a{color:rgba(255,255,255,.9);font-weight:700}
+
+/* ═══════════════════════════════════════
+   REVEAL ANIMATIONS
+═══════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ═══════════════════════════════════════
+   PAW PRINTS
+═══════════════════════════════════════ */
+.paw{
+  position:fixed;pointer-events:none;z-index:9990;font-size:13px;
+  animation:pawFd 2.2s ease-out forwards;transform-origin:center;
+}
+@keyframes pawFd{0%{opacity:.65;transform:scale(1)}100%{opacity:0;transform:scale(.4) rotate(20deg)}}
+
+/* click hearts */
+.cht{position:fixed;pointer-events:none;z-index:9991;font-size:18px}
+@keyframes chtPop{0%{opacity:1}80%{opacity:.7}100%{opacity:0}}
+
+/* sparkle */
+.sp{position:fixed;pointer-events:none;z-index:9992;font-size:11px;animation:spPop .85s ease-out forwards}
+@keyframes spPop{0%{opacity:1;transform:translate(-50%,-50%) scale(0) rotate(0deg)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(1.2) rotate(360deg)}}
+
+
+/* click hearts (used by kitty) */
+.cht{position:fixed;pointer-events:none;z-index:9991}
+.sp{position:fixed;pointer-events:none;z-index:9992;font-size:11px;animation:spPop .85s ease-out forwards}
+@keyframes spPop{0%{opacity:1;transform:translate(-50%,-50%) scale(0) rotate(0deg)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(1.2) rotate(360deg)}}
+
+/* ═══════════════════════════════════════
+   GHOST KITTY MASCOT — INDEPENDENT SPIRIT
+═══════════════════════════════════════ */
+#gkitty{
+  position:fixed;z-index:9995;pointer-events:none;
+  width:96px;height:96px;
+  opacity:0;
+  filter:drop-shadow(0 6px 18px rgba(236,72,153,.35));
+  will-change:transform,opacity;
+}
+#gkitty svg{width:96px;height:96px;overflow:visible}
+#gkitty-bubble{
+  position:fixed;z-index:9994;
+  background:rgba(255,255,255,.96);
+  border:2px solid #FFD6E7;
+  border-radius:18px 18px 0 18px;
+  padding:8px 16px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:12px;font-weight:700;
+  color:#EC4899;
+  white-space:nowrap;opacity:0;pointer-events:none;
+  box-shadow:0 4px 20px rgba(236,72,153,.2);
+  transition:opacity .4s ease;
+  backdrop-filter:blur(10px);
+}
+/* Paw print trail */
+.g-paw{
+  position:fixed;pointer-events:none;z-index:9990;
+  font-size:11px;opacity:0;
+  animation:gPawFade 3s ease-out forwards;
+}
+@keyframes gPawFade{
+  0%{opacity:.6;transform:scale(1)}
+  60%{opacity:.4}
+  100%{opacity:0;transform:scale(.4) rotate(15deg)}
+}
+/* Kitty keyframe animations */
+@keyframes kittyBounce{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  30%{transform:translateY(-14px) rotate(-3deg)}
+  60%{transform:translateY(-6px) rotate(2deg)}
+}
+@keyframes kittyWiggle{
+  0%,100%{transform:rotate(0deg) scale(1)}
+  20%{transform:rotate(-8deg) scale(1.05)}
+  50%{transform:rotate(8deg) scale(1.05)}
+  80%{transform:rotate(-4deg) scale(1)}
+}
+@keyframes kittyRoll{
+  0%{transform:rotate(0deg) translateX(0)}
+  25%{transform:rotate(90deg) translateX(20px)}
+  50%{transform:rotate(180deg) translateX(0)}
+  75%{transform:rotate(270deg) translateX(-20px)}
+  100%{transform:rotate(360deg) translateX(0)}
+}
+@keyframes kittyRun{
+  0%{transform:translateX(0) scaleX(1)}
+  49%{transform:translateX(120px) scaleX(1)}
+  50%{transform:translateX(120px) scaleX(-1)}
+  100%{transform:translateX(0) scaleX(-1)}
+}
+@keyframes kittyPeekUp{
+  0%{transform:translateY(100%)}
+  40%{transform:translateY(-10px)}
+  60%{transform:translateY(0)}
+  100%{transform:translateY(0)}
+}
+@keyframes kittyPeekLeft{
+  0%{transform:translateX(-110%)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(0)}
+  100%{transform:translateX(0)}
+}
+@keyframes kittyPeekRight{
+  0%{transform:translateX(110%)}
+  40%{transform:translateX(-8px)}
+  60%{transform:translateX(0)}
+  100%{transform:translateX(0)}
+}
+@keyframes kittySit{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+}
+@keyframes kittyJump{
+  0%{transform:translateY(0) scale(1)}
+  30%{transform:translateY(-40px) scale(1.1) rotate(-5deg)}
+  60%{transform:translateY(-28px) scale(1.05) rotate(3deg)}
+  80%{transform:translateY(-10px) scale(1)}
+  100%{transform:translateY(0) scale(1)}
+}
+@keyframes earWiggle{
+  0%,100%{transform:rotate(0)}
+  25%{transform:rotate(-8deg)}
+  75%{transform:rotate(8deg)}
+}
+@keyframes eyeBlink{
+  0%,90%,100%{transform:scaleY(1)}
+  95%{transform:scaleY(0.05)}
+}
+@keyframes tailSwing{
+  0%,100%{transform:rotate(0deg) translateX(0)}
+  25%{transform:rotate(15deg) translateX(3px)}
+  75%{transform:rotate(-15deg) translateX(-3px)}
+}
+@keyframes floatIn{
+  0%{opacity:0;transform:translateY(20px) scale(.7)}
+  60%{opacity:1;transform:translateY(-4px) scale(1.05)}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes floatOut{
+  0%{opacity:1;transform:scale(1)}
+  40%{opacity:.8;transform:scale(1.08) rotate(5deg)}
+  100%{opacity:0;transform:translateY(-30px) scale(.5) rotate(-10deg)}
+}
+/* ═══════════════════════════════════════
+   MOBILE
+═══════════════════════════════════════ */
+@media(max-width:960px){
+  .hero-grid,.ab-grid{grid-template-columns:1fr;text-align:center}
+  .h-right,.sk-grid,.pj-grid,.cert-grid,.edu-grid{grid-template-columns:1fr}
+  .vg{grid-template-columns:1fr 1fr}
+  .h-btns{justify-content:center} .section-sub{margin:0 auto 36px}
+  .nav-links{display:none}
+  #kcat,#cursor-ring,#cursor-dot{display:none}
+  body{cursor:auto}
+}
+@media(max-width:600px){
+  .vg,.cert-grid{grid-template-columns:1fr}
+  .h-stats{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+
+<div id="cr"></div>
+<div id="cd"></div>
+<canvas id="pc"></canvas>
+
+<!-- GHOST KITTY MASCOT -->
+<div id="gkitty">
+<svg viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
+  <!-- SHADOW -->
+  <ellipse cx="50" cy="106" rx="22" ry="5" fill="rgba(236,72,153,.12)" id="kitty-shadow"/>
+  
+  <!-- TAIL -->
+  <path id="kitty-tail" d="M68,78 Q88,62 82,84 Q78,96 70,86"
+    fill="#FFDDE9" stroke="#FFB3CC" stroke-width="1.5"
+    style="transform-origin:68px 78px;animation:tailSwing 1.4s ease-in-out infinite"/>
+  
+  <!-- BODY — round plush -->
+  <ellipse cx="50" cy="76" rx="29" ry="26" fill="#FFF5F8"/>
+  
+  <!-- PINK SWEATER / TUMMY AREA -->
+  <ellipse cx="50" cy="82" rx="21" ry="17" fill="#FFD0E4"/>
+  <ellipse cx="50" cy="85" rx="15" ry="11" fill="#FFAECF"/>
+  
+  <!-- COLLAR -->
+  <path d="M24,65 Q50,72 76,65" stroke="#FF85B3" stroke-width="4" fill="none" stroke-linecap="round"/>
+  
+  <!-- COLLAR BELL -->
+  <circle cx="50" cy="68" r="5" fill="#FFD700"/>
+  <circle cx="50" cy="68" r="3.5" fill="#FFF176"/>
+  <circle cx="48.5" cy="66.5" r="1" fill="rgba(255,255,255,.8)"/>
+  
+  <!-- HEAD — very round chibi -->
+  <circle cx="50" cy="42" r="30" fill="#FFF5F8"/>
+  
+  <!-- LEFT EAR outer -->
+  <path d="M22,22 Q16,4 30,14" fill="#FFF5F8" stroke="#FFD6E7" stroke-width="1"/>
+  <!-- LEFT EAR inner -->
+  <path d="M24,20 Q19,8 29,15" fill="#FFB3CC"/>
+  
+  <!-- RIGHT EAR outer -->
+  <path d="M78,22 Q84,4 70,14" fill="#FFF5F8" stroke="#FFD6E7" stroke-width="1"/>
+  <!-- RIGHT EAR inner -->
+  <path d="M76,20 Q81,8 71,15" fill="#FFB3CC"/>
+  
+  <!-- EAR TUFTS -->
+  <ellipse id="ear-l" cx="22" cy="16" rx="5" ry="7" fill="#FFB3CC" transform="rotate(-15,22,16)"
+    style="animation:earWiggle 2s ease-in-out infinite"/>
+  <ellipse id="ear-r" cx="78" cy="16" rx="5" ry="7" fill="#FFB3CC" transform="rotate(15,78,16)"
+    style="animation:earWiggle 2s ease-in-out infinite .3s"/>
+  
+  <!-- FACE BLUSH -->
+  <ellipse cx="30" cy="50" rx="8" ry="5" fill="#FFB3CC" opacity=".55"/>
+  <ellipse cx="70" cy="50" rx="8" ry="5" fill="#FFB3CC" opacity=".55"/>
+  
+  <!-- LEFT EYE -->
+  <g style="transform-origin:40px 40px;animation:eyeBlink 4s ease-in-out infinite">
+    <ellipse cx="40" cy="40" rx="9" ry="10" fill="#1E0A1B"/>
+    <ellipse cx="40" cy="40" rx="7.5" ry="8.5" fill="#3D2052"/>
+    <circle cx="40" cy="40" r="5.5" fill="#5B3880"/>
+    <!-- Shine -->
+    <circle cx="37" cy="37" r="2.8" fill="white"/>
+    <circle cx="43" cy="44" r="1.4" fill="rgba(255,255,255,.6)"/>
+  </g>
+  
+  <!-- RIGHT EYE -->
+  <g style="transform-origin:60px 40px;animation:eyeBlink 4s ease-in-out infinite .8s">
+    <ellipse cx="60" cy="40" rx="9" ry="10" fill="#1E0A1B"/>
+    <ellipse cx="60" cy="40" rx="7.5" ry="8.5" fill="#3D2052"/>
+    <circle cx="60" cy="40" r="5.5" fill="#5B3880"/>
+    <!-- Shine -->
+    <circle cx="57" cy="37" r="2.8" fill="white"/>
+    <circle cx="63" cy="44" r="1.4" fill="rgba(255,255,255,.6)"/>
+  </g>
+  
+  <!-- TINY NOSE -->
+  <ellipse cx="50" cy="53" rx="3" ry="2" fill="#FF85B3"/>
+  
+  <!-- MOUTH + TONGUE -->
+  <path d="M47,55 Q50,59 53,55" stroke="#FF85B3" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Tongue -->
+  <ellipse cx="50" cy="58" rx="4" ry="3.5" fill="#FF6BA8"/>
+  <ellipse cx="50" cy="58" rx="3" ry="2.5" fill="#FF85B3"/>
+  
+  <!-- WHISKERS LEFT -->
+  <line x1="16" y1="52" x2="38" y2="54" stroke="#E9C3DA" stroke-width="1.2" opacity=".8"/>
+  <line x1="16" y1="56" x2="38" y2="56" stroke="#E9C3DA" stroke-width="1.2" opacity=".8"/>
+  <line x1="16" y1="60" x2="38" y2="58" stroke="#E9C3DA" stroke-width="1.2" opacity=".6"/>
+  
+  <!-- WHISKERS RIGHT -->
+  <line x1="84" y1="52" x2="62" y2="54" stroke="#E9C3DA" stroke-width="1.2" opacity=".8"/>
+  <line x1="84" y1="56" x2="62" y2="56" stroke="#E9C3DA" stroke-width="1.2" opacity=".8"/>
+  <line x1="84" y1="60" x2="62" y2="58" stroke="#E9C3DA" stroke-width="1.2" opacity=".6"/>
+  
+  <!-- TINY PAWS -->
+  <ellipse cx="30" cy="94" rx="11" ry="8" fill="#FFD0E4"/>
+  <ellipse cx="70" cy="94" rx="11" ry="8" fill="#FFD0E4"/>
+  <!-- Paw toes left -->
+  <circle cx="23" cy="92" r="3" fill="#FFF5F8"/>
+  <circle cx="30" cy="90" r="3" fill="#FFF5F8"/>
+  <circle cx="37" cy="92" r="3" fill="#FFF5F8"/>
+  <!-- Paw toes right -->
+  <circle cx="63" cy="92" r="3" fill="#FFF5F8"/>
+  <circle cx="70" cy="90" r="3" fill="#FFF5F8"/>
+  <circle cx="77" cy="92" r="3" fill="#FFF5F8"/>
+  
+  <!-- HELD ITEM (hidden by default, shown by JS) -->
+  <text id="kitty-item" x="74" y="35" font-size="18" opacity="0" style="transition:opacity .5s">💖</text>
+</svg>
+</div>
+<div id="gkitty-bubble"></div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-in">
+    <div class="nav-logo">Sabeera ✨</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#education">Education</a>
+      <a href="#contact" class="nav-cta">Contact Me 💌</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-badge">
+        <div class="bp"></div>
+        <span class="badge-t">✨ Open to ServiceNow Developer Roles</span>
+      </div>
+      <h1 class="h-name">Sabeera<br/><span class="pk">Khanam</span></h1>
+      <div class="h-role">🌸 ERP-to-ServiceNow Bridge Builder</div>
+      <p class="h-bio">
+        <strong>PeopleSoft Financials Consultant</strong> with 3.5+ years of US-client enterprise production experience at Capgemini. Transitioning to <strong>ServiceNow Development</strong> with hands-on PDI practice. <strong>Oracle OCI 2024 GenAI Certified Professional</strong> with 25+ certifications. 💖
+      </p>
+      <div class="h-btns">
+        <a href="mailto:sabeerakhanam1234@gmail.com" class="btn-main">💌 Contact Me</a>
+        <a href="https://www.linkedin.com/in/sabeerakhanam/" target="_blank" class="btn-ghost">↗ LinkedIn</a>
+      </div>
+      <div class="h-stats">
+        <div class="hs"><div class="hs-n">3.5+</div><div class="hs-l">Years ERP</div></div>
+        <div class="hs"><div class="hs-n">25+</div><div class="hs-l">Certifications</div></div>
+        <div class="hs"><div class="hs-n">P1</div><div class="hs-l">10-Min SLA</div></div>
+      </div>
+    </div>
+    <div class="h-right">
+      <div class="av-wrap"><div class="av-in">SK</div></div>
+      <div class="h-pill">🏅 Oracle OCI GenAI Professional</div>
+      <div class="h-pill">⚙️ ServiceNow CSA — In Progress</div>
+      <div class="h-pill">🎓 MCA · GPA 9.25 / 10</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="ab-grid">
+      <div class="reveal">
+        <span class="eyebrow">🌸 About Me</span>
+        <h2 class="section-title">The Bridge Between<br/><span class="g">ERP &amp; Service Management</span></h2>
+        <div class="ab-text">
+          <p>I joined <strong>Capgemini</strong> in December 2022 as an Analyst and was promoted to <strong>Senior Analyst in April 2024</strong> — supporting a US-based enterprise client's PeopleSoft Financials environment managing AP, AR, GL, Billing, and Financial Gateway modules in a 24×7 production setting.</p>
+          <p>After 3.5 years of managing <strong>P1/P2/P3 production incidents</strong>, building SQL and PS Query reports, delivering custom page enhancements, and supporting enterprise upgrade projects — I recognized that my work maps directly to <strong>ServiceNow ITSM</strong>.</p>
+          <p>I am now actively building ServiceNow skills on my <strong>Personal Developer Instance (PDI)</strong>, pursuing CSA certification, and growing as the consultant who bridges deep ERP financial domain knowledge with the Now Platform. ✨</p>
+        </div>
+        <div class="vg">
+          <div class="vc vc1"><div class="vi">⚡</div><div class="vt">Production-First</div><div class="vd">Calm, systematic P1 incident resolution under real pressure</div></div>
+          <div class="vc vc2"><div class="vi">📚</div><div class="vt">Continuous Learning</div><div class="vd">25+ certifications completed while working full-time</div></div>
+          <div class="vc vc3"><div class="vi">🌐</div><div class="vt">Global Mindset</div><div class="vd">3+ years US client collaboration, Harvard-certified in Global Collaboration</div></div>
+          <div class="vc vc4"><div class="vi">🔄</div><div class="vt">Strategic Transition</div><div class="vd">Moving from legacy ERP to the fastest-growing enterprise platform</div></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px" class="reveal">
+        <div class="info-card">
+          <div class="ir"><span class="il">Current Role</span><span class="iv">Senior Analyst, Capgemini</span></div>
+          <div class="ir"><span class="il">Specialization</span><span class="iv">PeopleSoft Financials</span></div>
+          <div class="ir"><span class="il">Transitioning To</span><span class="iv">ServiceNow Development</span></div>
+          <div class="ir"><span class="il">Education</span><span class="iv">MCA — GPA 9.25 / 10</span></div>
+          <div class="ir"><span class="il">Languages</span><span class="iv">English, Hindi, Urdu, Telugu</span></div>
+          <div class="ir"><span class="il">LinkedIn</span><span class="iv"><a href="https://www.linkedin.com/in/sabeerakhanam/" target="_blank">linkedin.com/in/sabeerakhanam</a></span></div>
+          <div class="ir"><span class="il">GitHub</span><span class="iv"><a href="https://github.com/sabeerakhanam" target="_blank">github.com/sabeerakhanam</a></span></div>
+          <div class="ir"><span class="il">Email</span><span class="iv"><a href="mailto:sabeerakhanam1234@gmail.com">sabeerakhanam1234@gmail.com</a></span></div>
+        </div>
+        <div class="fc">
+          <div class="fc-t">🎯 Current Focus</div>
+          <div class="fi"><span class="fa">✦</span>ServiceNow CSA Certification — In Progress</div>
+          <div class="fi"><span class="fa">✦</span>PDI: ITSM, Flow Designer, Business Rules</div>
+          <div class="fi"><span class="fa">✦</span>JavaScript for ServiceNow Scripting</div>
+          <div class="fi"><span class="fa">✦</span>ServiceNow CAD — Planned Month 4–5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <span class="eyebrow">💼 Career Timeline</span>
+    <h2 class="section-title">Professional <span class="g">Experience</span></h2>
+    <p class="section-sub">3.5+ years of enterprise ERP production experience serving a US-based client. 🌟</p>
+    <div class="tl">
+      <div class="tli reveal">
+        <div class="tl-dot"></div>
+        <div class="tl-card tl-c1">
+          <div class="tl-top">
+            <div>
+              <div class="tl-role">Senior Analyst — PeopleSoft Financials Techno-Functional Consultant</div>
+              <div class="tl-co">Capgemini India Pvt. Ltd.</div>
+              <div class="tl-loc">📍 Bangalore, India · Promoted April 2024</div>
+            </div>
+            <div class="tl-period">Apr 2024 – Present</div>
+          </div>
+          <ul class="tl-ul">
+            <li>Led <strong>P1/P2/P3 production incident resolution</strong> — P1 acknowledged within <strong>10 minutes</strong>, resolved within <strong>2–3 hours</strong></li>
+            <li>Developed <strong>20+ SQL and PS Query reports</strong> enabling month-end reports <strong>40% faster</strong></li>
+            <li>Engineered <strong>custom page and component enhancements</strong> using Application Designer and PeopleCode</li>
+            <li>Supported <strong>Financial Gateway</strong> — EFT/ACH/wire transfers and bank statement reconciliation</li>
+            <li>Contributed to <strong>12-member PeopleSoft upgrade project</strong> — end-to-end testing and defect triage</li>
+            <li>Authored <strong>RCA documents</strong> and conducted defect triage calls with US client stakeholders</li>
+            <li>Delivered <strong>KT sessions to 2 junior analysts</strong>, accelerating onboarding by 30%</li>
+          </ul>
+          <div class="tl-tags">
+            <span class="tb">PeopleSoft Financials</span><span class="tb">AP / AR / GL</span><span class="tb">Financial Gateway</span><span class="tb">SQL</span><span class="tb">PeopleCode</span><span class="tb">App Designer</span><span class="tb">RCA</span><span class="tb">US Client</span>
+          </div>
+        </div>
+      </div>
+      <div class="tli reveal">
+        <div class="tl-dot" style="background:var(--lav-deep);box-shadow:0 0 0 3px rgba(192,132,252,.35)"></div>
+        <div class="tl-card tl-c2">
+          <div class="tl-top">
+            <div>
+              <div class="tl-role">Analyst — PeopleSoft Techno-Functional Consultant</div>
+              <div class="tl-co" style="color:#7C3AED">Capgemini India Pvt. Ltd.</div>
+              <div class="tl-loc">📍 Bangalore, India</div>
+            </div>
+            <div class="tl-period">Dec 2022 – Mar 2024</div>
+          </div>
+          <ul class="tl-ul">
+            <li>Resolved <strong>100+ tickets</strong> across P1, P2, P3 severity levels in live US production</li>
+            <li>Performed <strong>AP setup table configuration</strong> — payment terms, bank accounts, voucher approval workflows</li>
+            <li>Used <strong>SQR debug, trace file analysis, and backend SQL</strong> for structured troubleshooting</li>
+            <li>Participated in <strong>Agile sprint ceremonies</strong> and defect triage calls</li>
+            <li>Configured <strong>GL ChartFields, journal entries, and accounting period processing</strong></li>
+          </ul>
+          <div class="tl-tags">
+            <span class="tb">Production Support</span><span class="tb">SQR Debug</span><span class="tb">Trace Files</span><span class="tb">GL ChartFields</span><span class="tb">Agile</span><span class="tb">AP Configuration</span>
+          </div>
+        </div>
+      </div>
+      <div class="tli reveal">
+        <div class="tl-dot" style="background:#FB923C;box-shadow:0 0 0 3px rgba(251,146,60,.35)"></div>
+        <div class="tl-card tl-c3">
+          <div class="tl-top">
+            <div>
+              <div class="tl-role">Full Stack Java Developer Intern</div>
+              <div class="tl-co" style="color:#EA580C">HCL Technologies</div>
+              <div class="tl-loc">📍 India</div>
+            </div>
+            <div class="tl-period">Oct 2021 – Feb 2022</div>
+          </div>
+          <ul class="tl-ul">
+            <li>Completed <strong>Full Stack Java Development</strong> training at HCL Centum Foundation — Java, web application development, and SDLC fundamentals</li>
+          </ul>
+          <div class="tl-tags"><span class="tb">Java</span><span class="tb">Full Stack</span><span class="tb">SDLC</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <span class="eyebrow">⚡ Technical Expertise</span>
+    <h2 class="section-title">Skills &amp; <span class="g">Competencies</span></h2>
+    <p class="section-sub">Deep ERP domain expertise combined with emerging ServiceNow platform skills. 🌸</p>
+    <div class="sk-grid">
+      <div class="sk-card sk-c1 reveal">
+        <div class="sk-icon">🏗️</div><div class="sk-title">PeopleSoft Financials</div>
+        <div class="sk-item"><div class="sk-nm"><span>AP / AR / GL / Billing</span><span class="sk-pct">Advanced</span></div><div class="sk-bar"><div class="sk-fill" style="width:88%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>Financial Gateway</span><span class="sk-pct">Intermediate</span></div><div class="sk-bar"><div class="sk-fill" style="width:75%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>Application Designer</span><span class="sk-pct">Intermediate</span></div><div class="sk-bar"><div class="sk-fill" style="width:72%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>PeopleCode</span><span class="sk-pct">Intermediate</span></div><div class="sk-bar"><div class="sk-fill" style="width:65%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>PS Query / SQR</span><span class="sk-pct">Intermediate</span></div><div class="sk-bar"><div class="sk-fill" style="width:70%"></div></div></div>
+      </div>
+      <div class="sk-card sk-c2 reveal">
+        <div class="sk-icon">⚙️</div><div class="sk-title">ServiceNow — In Progress</div>
+        <div class="sk-item"><div class="sk-nm"><span>ITSM Modules</span><span class="sk-pct">Learning</span></div><div class="sk-bar"><div class="sk-fill" style="width:55%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>Business Rules</span><span class="sk-pct">Learning</span></div><div class="sk-bar"><div class="sk-fill" style="width:50%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>Flow Designer</span><span class="sk-pct">Learning</span></div><div class="sk-bar"><div class="sk-fill" style="width:48%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>Client Scripts</span><span class="sk-pct">Learning</span></div><div class="sk-bar"><div class="sk-fill" style="width:45%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>Service Catalog / PDI</span><span class="sk-pct">Learning</span></div><div class="sk-bar"><div class="sk-fill" style="width:50%"></div></div></div>
+      </div>
+      <div class="sk-card sk-c3 reveal">
+        <div class="sk-icon">🗄️</div><div class="sk-title">Database &amp; Programming</div>
+        <div class="sk-item"><div class="sk-nm"><span>SQL</span><span class="sk-pct">Intermediate</span></div><div class="sk-bar"><div class="sk-fill" style="width:78%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>PL/SQL</span><span class="sk-pct">Intermediate</span></div><div class="sk-bar"><div class="sk-fill" style="width:70%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>Oracle SQL</span><span class="sk-pct">Intermediate</span></div><div class="sk-bar"><div class="sk-fill" style="width:72%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>JavaScript</span><span class="sk-pct">Learning</span></div><div class="sk-bar"><div class="sk-fill" style="width:40%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>Glide API</span><span class="sk-pct">Learning</span></div><div class="sk-bar"><div class="sk-fill" style="width:38%"></div></div></div>
+      </div>
+      <div class="sk-card sk-c4 reveal">
+        <div class="sk-icon">☁️</div><div class="sk-title">Cloud &amp; AI</div>
+        <div class="sk-item"><div class="sk-nm"><span>Oracle Cloud Infrastructure</span><span class="sk-pct">Certified</span></div><div class="sk-bar"><div class="sk-fill" style="width:78%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>Generative AI</span><span class="sk-pct">Certified</span></div><div class="sk-bar"><div class="sk-fill" style="width:72%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>Prompt Engineering</span><span class="sk-pct">Certified</span></div><div class="sk-bar"><div class="sk-fill" style="width:70%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>LLMs (AWS + DL.AI)</span><span class="sk-pct">Certified</span></div><div class="sk-bar"><div class="sk-fill" style="width:65%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>REST API Concepts</span><span class="sk-pct">Learning</span></div><div class="sk-bar"><div class="sk-fill" style="width:45%"></div></div></div>
+      </div>
+      <div class="sk-card sk-c5 reveal">
+        <div class="sk-icon">🔧</div><div class="sk-title">Tools &amp; Methods</div>
+        <div class="sk-item"><div class="sk-nm"><span>Incident Management P1–P3</span><span class="sk-pct">Advanced</span></div><div class="sk-bar"><div class="sk-fill" style="width:90%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>RCA Documentation</span><span class="sk-pct">Advanced</span></div><div class="sk-bar"><div class="sk-fill" style="width:85%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>Agile / Scrum</span><span class="sk-pct">Intermediate</span></div><div class="sk-bar"><div class="sk-fill" style="width:72%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>Git / GitHub</span><span class="sk-pct">Intermediate</span></div><div class="sk-bar"><div class="sk-fill" style="width:60%"></div></div></div>
+        <div class="sk-item"><div class="sk-nm"><span>CI/CD Fundamentals</span><span class="sk-pct">Foundational</span></div><div class="sk-bar"><div class="sk-fill" style="width:45%"></div></div></div>
+      </div>
+      <div class="sk-card sk-c6 reveal">
+        <div class="sk-icon">🤝</div><div class="sk-title">Professional Skills</div>
+        <div class="sk-tags">
+          <span class="sk-tag">Production Support</span>
+          <span class="sk-tag">US Client Management</span>
+          <span class="sk-tag">Knowledge Transfer</span>
+          <span class="sk-tag">Stakeholder Communication</span>
+          <span class="sk-tag">Analytical Thinking</span>
+          <span class="sk-tag">Global Collaboration</span>
+          <span class="sk-tag">Business Process</span>
+          <span class="sk-tag">Cross-Functional Teams</span>
+          <span class="sk-tag">Documentation</span>
+          <span class="sk-tag">Problem Solving</span>
+          <span class="sk-tag">ITIL Concepts</span>
+          <span class="sk-tag">24×7 Support</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <span class="eyebrow">✨ Featured Work</span>
+    <h2 class="section-title">Key <span class="g">Projects</span></h2>
+    <p class="section-sub">Enterprise-scale ERP projects and emerging ServiceNow development work. 💫</p>
+    <div class="pj-grid">
+      <div class="pj-card pc1 reveal">
+        <div class="pj-top"></div>
+        <div class="pj-body">
+          <div class="pj-num">PROJECT / 01</div>
+          <div class="pj-title">PeopleSoft Financials Upgrade</div>
+          <div class="pj-client">Capgemini · US Enterprise Client · 2024–Present</div>
+          <div class="pj-lbl">Objective</div>
+          <div class="pj-txt">Upgrade PeopleSoft Financials for a large US enterprise client to improve performance, compliance, and scalability.</div>
+          <div class="pj-lbl">Contribution</div>
+          <div class="pj-txt">End-to-end functional testing across AP, AR, GL, Billing; validated Financial Gateway configurations; documented defect logs.</div>
+          <div class="pj-impact">✅ Zero critical defects at go-live · 12-member team</div>
+          <div class="pj-tags"><span class="pj-tag">PeopleSoft 9.x</span><span class="pj-tag">App Designer</span><span class="pj-tag">SQL</span><span class="pj-tag">Financial Gateway</span></div>
+        </div>
+      </div>
+      <div class="pj-card pc2 reveal">
+        <div class="pj-top"></div>
+        <div class="pj-body">
+          <div class="pj-num">PROJECT / 02</div>
+          <div class="pj-title">Financial Gateway Bank Integration</div>
+          <div class="pj-client">Capgemini · US Client · 2023–2024</div>
+          <div class="pj-lbl">Objective</div>
+          <div class="pj-txt">Support enterprise-scale payment processing and bank reconciliation for US client's Financial Gateway module.</div>
+          <div class="pj-lbl">Contribution</div>
+          <div class="pj-txt">EFT/ACH/wire transfer configurations, bank statement reconciliation, resolved P1/P2 payment failures within SLA.</div>
+          <div class="pj-impact">✅ 99%+ SLA adherence for payment processing</div>
+          <div class="pj-tags"><span class="pj-tag">Financial Gateway</span><span class="pj-tag">EFT / ACH</span><span class="pj-tag">SQL</span><span class="pj-tag">SQR</span></div>
+        </div>
+      </div>
+      <div class="pj-card pc3 reveal">
+        <div class="pj-top"></div>
+        <div class="pj-body">
+          <div class="pj-num">PROJECT / 03</div>
+          <div class="pj-title">ServiceNow ITSM Practice App</div>
+          <div class="pj-client">Personal Development · PDI · 2026–Present</div>
+          <div class="pj-lbl">Objective</div>
+          <div class="pj-txt">Build hands-on ServiceNow skills by creating functional ITSM workflows on Personal Developer Instance.</div>
+          <div class="pj-lbl">Built So Far</div>
+          <div class="pj-txt">Incident Priority auto-assignment (Business Rule), P1 escalation automation (Flow Designer), IT Access Request Catalog with 2-level approval.</div>
+          <div class="pj-impact">🔨 In Active Development · github.com/sabeerakhanam</div>
+          <div class="pj-tags"><span class="pj-tag">ServiceNow PDI</span><span class="pj-tag">Flow Designer</span><span class="pj-tag">Business Rules</span><span class="pj-tag">JavaScript</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="wrap">
+    <span class="eyebrow">🏅 Credentials</span>
+    <h2 class="section-title">Certifications &amp; <span class="g">Learning</span></h2>
+    <p class="section-sub">25+ verified certifications from Oracle, Harvard, Vanderbilt, UC Davis, DeepLearning.AI, Google &amp; more. 🌟</p>
+    <div class="cert-grid">
+      <div class="cc ct1 reveal"><div class="c-bar"></div><div class="c-in"><div class="c-ico">🏅</div><div><div class="c-name">Oracle Cloud Infrastructure 2024 Generative AI Certified Professional</div><div class="c-iss">Oracle University</div><div class="c-dt">July 2024</div><span class="c-badge cb-ok">Active</span></div></div></div>
+      <div class="cc ct1 reveal"><div class="c-bar"></div><div class="c-in"><div class="c-ico">☁️</div><div><div class="c-name">Oracle Cloud Infrastructure 2023 Certified Foundations Associate</div><div class="c-iss">Oracle University</div><div class="c-dt">September 2023</div><span class="c-badge cb-ok">Active</span></div></div></div>
+      <div class="cc ct2 reveal"><div class="c-bar"></div><div class="c-in"><div class="c-ico">⚙️</div><div><div class="c-name">ServiceNow Certified System Administrator (CSA)</div><div class="c-iss">ServiceNow</div><div class="c-dt">2026 — Actively Preparing</div><span class="c-badge cb-wip">In Progress</span></div></div></div>
+      <div class="cc ct6 reveal"><div class="c-bar"></div><div class="c-in"><div class="c-ico">🗄️</div><div><div class="c-name">The Complete PL/SQL Bootcamp: Beginner to Advanced (26.5 hrs)</div><div class="c-iss">Udemy</div><div class="c-dt">July 2024</div><span class="c-badge cb-ok">Active</span></div></div></div>
+      <div class="cc ct6 reveal"><div class="c-bar"></div><div class="c-in"><div class="c-ico">📊</div><div><div class="c-name">SQL for Data Science</div><div class="c-iss">University of California, Davis / Coursera</div><div class="c-dt">August 2024</div><span class="c-badge cb-ok">Active</span></div></div></div>
+      <div class="cc ct2 reveal"><div class="c-bar"></div><div class="c-in"><div class="c-ico">🤖</div><div><div class="c-name">Prompt Engineering for ChatGPT</div><div class="c-iss">Vanderbilt University / Coursera</div><div class="c-dt">March 2024</div><span class="c-badge cb-ok">Active</span></div></div></div>
+      <div class="cc ct2 reveal"><div class="c-bar"></div><div class="c-in"><div class="c-ico">🧠</div><div><div class="c-name">Generative AI with Large Language Models</div><div class="c-iss">DeepLearning.AI + Amazon Web Services / Coursera</div><div class="c-dt">March 2024</div><span class="c-badge cb-ok">Active</span></div></div></div>
+      <div class="cc ct7 reveal"><div class="c-bar"></div><div class="c-in"><div class="c-ico">💡</div><div><div class="c-name">Introduction to Generative AI</div><div class="c-iss">Google Cloud / Coursera</div><div class="c-dt">March 2024</div><span class="c-badge cb-ok">Active</span></div></div></div>
+      <div class="cc ct4 reveal"><div class="c-bar"></div><div class="c-in"><div class="c-ico">🔄</div><div><div class="c-name">IC Agile (ICAGILE) — Certified Agile Learning</div><div class="c-iss">Udemy</div><div class="c-dt">August 2025</div><span class="c-badge cb-ok">Active</span></div></div></div>
+      <div class="cc ct4 reveal"><div class="c-bar"></div><div class="c-in"><div class="c-ico">🔧</div><div><div class="c-name">Introduction to CI/CD</div><div class="c-iss">Udemy</div><div class="c-dt">August 2025</div><span class="c-badge cb-ok">Active</span></div></div></div>
+      <div class="cc ct5 reveal"><div class="c-bar"></div><div class="c-in"><div class="c-ico">🎓</div><div><div class="c-name">Global Collaboration</div><div class="c-iss">Harvard ManageMentor® / Harvard Business Publishing</div><div class="c-dt">July 2024</div><span class="c-badge cb-ok">Active</span></div></div></div>
+      <div class="cc ct3 reveal"><div class="c-bar"></div><div class="c-in"><div class="c-ico">🏢</div><div><div class="c-name">Tech &amp; Digital Level 2 Certification</div><div class="c-iss">Capgemini University</div><div class="c-dt">July 2024</div><span class="c-badge cb-ok">Active</span></div></div></div>
+    </div>
+    <div style="text-align:center;margin-top:22px;padding:16px 24px;background:rgba(255,255,255,.65);border-radius:16px;border:1px solid rgba(251,168,208,.3);backdrop-filter:blur(12px)">
+      <span style="font-size:13.5px;color:var(--ink-mid)">+ 10 more certifications in AI, Cloud, Agile &amp; Professional Development &nbsp;·&nbsp;</span>
+      <a href="https://www.linkedin.com/in/sabeerakhanam/" target="_blank" style="color:var(--pink-deep);font-weight:800;font-size:13.5px">View all on LinkedIn 💖</a>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="wrap">
+    <span class="eyebrow">🎓 Academic Background</span>
+    <h2 class="section-title">Education<span class="g"> &amp; Background</span></h2>
+    <p class="section-sub">Strong academic foundation with consistently outstanding performance. ✨</p>
+    <div class="edu-grid">
+      <div class="edu-card eu1 reveal">
+        <div class="edu-top"></div>
+        <div class="edu-body">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+            <span style="font-size:40px">🎓</span>
+            <div>
+              <div class="edu-deg">Master of Computer Applications (MCA)</div>
+              <div class="edu-inst">Kakaraparti Bhavanarayana (KBN) College</div>
+              <div class="edu-yr">2020 – May 2022 · Vijayawada, India</div>
+            </div>
+          </div>
+          <div class="gpa">⭐ GPA: 9.25 / 10 — Grade O (Outstanding)</div>
+          <div class="edu-spec">Specialization: Computer Science · Full-Stack Java Development · Artificial Intelligence</div>
+        </div>
+      </div>
+      <div class="edu-card eu2 reveal">
+        <div class="edu-top"></div>
+        <div class="edu-body">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+            <span style="font-size:40px">📚</span>
+            <div>
+              <div class="edu-deg">Bachelor of Science — Computer Science (B.Sc Comp)</div>
+              <div class="edu-inst">Gandhiji Mahila Kalasala</div>
+              <div class="edu-yr">Completed: May 2019 · India</div>
+            </div>
+          </div>
+          <div class="gpa">⭐ GPA: 8.27 / 10</div>
+          <div class="edu-spec">Core Computer Science, programming fundamentals, and mathematics</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="ct-wrap reveal">
+      <div>
+        <span class="eyebrow">💌 Get In Touch</span>
+        <h2 class="section-title">Let's <span style="-webkit-text-fill-color:#fff;color:#fff">Connect</span></h2>
+        <p class="ct-sub">
+          Open to <strong>ServiceNow Developer</strong>, ServiceNow Administrator, and ITSM Consultant opportunities.<br/>
+          I respond within 24 hours — tap <strong>Contact Me 💌</strong> in the nav above!
+        </p>
+      </div>
+      <div class="c-links">
+        <a href="mailto:sabeerakhanam1234@gmail.com" class="c-link">✉ sabeerakhanam1234@gmail.com</a>
+        <a href="https://www.linkedin.com/in/sabeerakhanam/" target="_blank" class="c-link">💼 LinkedIn Profile</a>
+        <a href="https://github.com/sabeerakhanam" target="_blank" class="c-link">💻 GitHub Portfolio</a>
+        <a href="tel:+919381376676" class="c-link">📱 +91 93813 76676</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-n">Sabeera Khanam ✨</div>
+    <div class="ft-s">
+      ERP-to-ServiceNow Bridge Builder · PeopleSoft Financials · Oracle OCI GenAI Certified 🌸<br/>
+      <a href="mailto:sabeerakhanam1234@gmail.com">sabeerakhanam1234@gmail.com</a> ·
+      <a href="https://www.linkedin.com/in/sabeerakhanam/" target="_blank">LinkedIn</a> ·
+      <a href="https://github.com/sabeerakhanam" target="_blank">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════ */
+const cr=document.getElementById('cr'),cd=document.getElementById('cd');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cd.style.left=mx+'px';cd.style.top=my+'px'});
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;cr.style.left=rx+'px';cr.style.top=ry+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('a,button,.vc,.sk-card,.pj-card,.cc,.edu-card,.tl-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
+});
+
+/* ═══════════════════════════════
+   FLOATING PARTICLES
+═══════════════════════════════ */
+const cnv=document.getElementById('pc'),ctx=cnv.getContext('2d');
+function rsz(){cnv.width=window.innerWidth;cnv.height=window.innerHeight}rsz();
+window.addEventListener('resize',rsz);
+const EM=['✨','🌸','💖','⭐','🌷','💫','🎀','🌺'];
+const parts=Array.from({length:26},(_,i)=>({
+  x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,
+  e:EM[i%8],s:9+Math.random()*13,
+  vx:(Math.random()-.5)*.35,vy:-.18-Math.random()*.42,
+  a:.28+Math.random()*.44,r:0,rv:(Math.random()-.5)*.025,ph:Math.random()*Math.PI*2
+}));
+function drawP(t){
+  ctx.clearRect(0,0,cnv.width,cnv.height);
+  parts.forEach(p=>{
+    p.x+=p.vx+Math.sin(t*.0008+p.ph)*.28;p.y+=p.vy;p.r+=p.rv;
+    if(p.y<-30){p.y=cnv.height+10;p.x=Math.random()*cnv.width}
+    ctx.save();ctx.globalAlpha=p.a*(0.55+0.45*Math.sin(t*.0018+p.ph));
+    ctx.font=p.s+'px serif';ctx.translate(p.x,p.y);ctx.rotate(p.r);
+    ctx.fillText(p.e,-p.s/2,-p.s/2);ctx.restore();
+  });
+  requestAnimationFrame(drawP);
+}requestAnimationFrame(drawP);
+
+/* ═══════════════════════════════
+   GHOST KITTY — INDEPENDENT SPIRIT
+═══════════════════════════════ */
+(function GhostKitty(){
+  const K      = document.getElementById('gkitty');
+  const BUBBLE = document.getElementById('gkitty-bubble');
+  const ITEM   = document.getElementById('kitty-item');
+  const SVG    = K.querySelector('svg');
+
+  const MSGS = [
+    'Meow ✨','Nice portfolio 💖','I was never here 🐾',
+    'Looking around 👀','Catch me if you can 😺',
+    'Found a treat! 🍪','Purrr... 💕','*sneaks away* 🐾',
+    'Your CSS is cute! ✨','Secret tunnel! 🕳️'
+  ];
+  const ITEMS  = ['💖','🌸','✨','🐾','⭐'];
+  const PAWCOL = ['#FFB0CC','#F9A8D4','#FBCFE8','#FFC0D5','#FFD6E7'];
+
+  let visTimer=null, hideTimer=null, bubTimer=null;
+  let isVisible=false, currentAnim='';
+  let msgIdx=0;
+
+  /* ── BUBBLE ── */
+  function showBubble(msg, x, y, dur=2800){
+    BUBBLE.textContent = msg;
+    BUBBLE.style.left  = x + 'px';
+    BUBBLE.style.top   = (y - 54) + 'px';
+    BUBBLE.style.opacity = '1';
+    clearTimeout(bubTimer);
+    bubTimer = setTimeout(()=>{ BUBBLE.style.opacity='0'; }, dur);
+  }
+
+  /* ── PAW TRAIL ── */
+  function spawnPawTrail(x, y, count=4){
+    for(let i=0;i<count;i++){
+      setTimeout(()=>{
+        const p = document.createElement('div');
+        p.className = 'g-paw';
+        p.textContent = '🐾';
+        const ox = (Math.random()-.5)*30, oy = (Math.random()-.5)*30;
+        const rot = Math.random()*360, sc = .5+Math.random()*.6;
+        p.style.cssText = `left:${x+ox}px;top:${y+oy}px;transform:rotate(${rot}deg) scale(${sc});color:${PAWCOL[Math.floor(Math.random()*PAWCOL.length)]};animation-delay:${i*.15}s`;
+        document.body.appendChild(p);
+        setTimeout(()=>p.remove(), 3500);
+      }, i*140);
+    }
+  }
+
+  /* ── RANDOM POSITION SLOTS ── */
+  function getSlot(){
+    const W = window.innerWidth, H = window.innerHeight;
+    const slots = [
+      // corners
+      { x:20,           y:H-130, anim:'floatIn',        label:'bottom-left'  },
+      { x:W-116,        y:H-130, anim:'floatIn',        label:'bottom-right' },
+      { x:20,           y:90,    anim:'kittyPeekLeft',  label:'top-left'     },
+      { x:W-116,        y:90,    anim:'kittyPeekRight', label:'top-right'    },
+      // navbar area
+      { x:W/2-48,       y:4,     anim:'kittyPeekUp',   label:'navbar'       },
+      { x:W*0.7,        y:4,     anim:'kittyPeekUp',   label:'navbar-r'     },
+      // hero
+      { x:W*0.15,       y:H*0.3, anim:'kittyJump',     label:'hero'         },
+      { x:W*0.75,       y:H*0.25,anim:'kittyBounce',   label:'hero-r'       },
+      // mid sections
+      { x:W*0.1,        y:H*0.55,anim:'floatIn',       label:'mid-left'     },
+      { x:W*0.85,       y:H*0.6, anim:'floatIn',       label:'mid-right'    },
+      // edge peeks
+      { x:-14,          y:H*0.4, anim:'kittyPeekLeft', label:'edge-left'    },
+      { x:W-82,         y:H*0.4, anim:'kittyPeekRight',label:'edge-right'   },
+      // random
+      { x:W*(.2+Math.random()*.6), y:H*(.2+Math.random()*.5), anim:'kittyBounce', label:'random' },
+    ];
+    return slots[Math.floor(Math.random()*slots.length)];
+  }
+
+  /* ── APPEAR ── */
+  function appear(){
+    if(isVisible) return;
+    const slot = getSlot();
+    isVisible = true;
+
+    // position
+    K.style.left    = slot.x + 'px';
+    K.style.top     = slot.y + 'px';
+    K.style.opacity = '0';
+    K.style.animation = 'none';
+
+    // Random item held
+    if(Math.random()<.4){
+      ITEM.textContent = ITEMS[Math.floor(Math.random()*ITEMS.length)];
+      ITEM.style.opacity='1';
+    } else {
+      ITEM.style.opacity='0';
+    }
+
+    // Sometimes: partial reveal first (ears only, then eyes, then full)
+    const doPartial = Math.random()<.35 && (slot.label==='navbar'||slot.label.includes('top')||slot.label.includes('edge'));
+    if(doPartial){
+      partialReveal(slot);
+    } else {
+      fullReveal(slot);
+    }
+  }
+
+  function partialReveal(slot){
+    // Step 1: only show top ~25px (ears)
+    K.style.clipPath = 'inset(0 0 75% 0)';
+    K.style.opacity  = '1';
+    K.style.animation = 'none';
+    setTimeout(()=>{
+      // Step 2: show top ~50% (eyes)
+      K.style.clipPath = 'inset(0 0 50% 0)';
+      setTimeout(()=>{
+        // Step 3: full reveal
+        K.style.clipPath = 'inset(0 0 0 0)';
+        K.style.animation = slot.anim + ' .7s cubic-bezier(.34,1.56,.64,1) forwards';
+        afterReveal(slot);
+      },500);
+    },600);
+  }
+
+  function fullReveal(slot){
+    // Smooth float in
+    K.style.clipPath = 'none';
+    K.style.opacity  = '1';
+    K.style.animation = slot.anim + ' .65s cubic-bezier(.34,1.56,.64,1) forwards';
+
+    // After entry anim, start idle loop
+    setTimeout(()=>{ startIdleAnim(slot); }, 700);
+    afterReveal(slot);
+  }
+
+  function afterReveal(slot){
+    const msg = MSGS[msgIdx++ % MSGS.length];
+    setTimeout(()=>showBubble(msg, slot.x+48, slot.y, 2600), 500);
+
+    // Decide how long to stay: 2.5–6 seconds
+    const stayDur = 2500 + Math.random()*3500;
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(()=> hide(slot), stayDur);
+  }
+
+  function startIdleAnim(slot){
+    const idles=['kittySit','kittyWiggle','kittyBounce'];
+    const pick = idles[Math.floor(Math.random()*idles.length)];
+    K.style.animation = pick + ' 1.2s ease-in-out infinite';
+
+    // Occasionally run across screen
+    if(Math.random()<.25 && slot.label==='random'){
+      K.style.animation = 'kittyRun 1.4s ease-in-out forwards';
+    }
+    // Occasionally roll
+    if(Math.random()<.15){
+      K.style.animation = 'kittyRoll 1.8s ease-in-out forwards';
+    }
+  }
+
+  /* ── HIDE ── */
+  function hide(slot){
+    if(!isVisible) return;
+    const x = parseFloat(K.style.left)||0;
+    const y = parseFloat(K.style.top)||0;
+
+    // Leave paw prints
+    spawnPawTrail(x+48, y+80);
+
+    // Vanish animation
+    K.style.animation = 'floatOut .55s ease-in forwards';
+    setTimeout(()=>{
+      K.style.opacity = '0';
+      K.style.animation = 'none';
+      K.style.clipPath = 'none';
+      ITEM.style.opacity='0';
+      BUBBLE.style.opacity='0';
+      isVisible = false;
+      scheduleNext();
+    }, 560);
+  }
+
+  /* ── SCHEDULE ── */
+  function scheduleNext(){
+    const delay = 8000 + Math.random()*12000; // 8–20s
+    clearTimeout(visTimer);
+    visTimer = setTimeout(appear, delay);
+  }
+
+  /* ── CLICK ON KITTY ── */
+  K.style.pointerEvents='auto';
+  K.addEventListener('click',()=>{
+    clearTimeout(hideTimer);
+    clearTimeout(bubTimer);
+    showBubble('You caught me! 😹💕', parseFloat(K.style.left)+48, parseFloat(K.style.top));
+    spawnHearts(parseFloat(K.style.left)+48, parseFloat(K.style.top)+48);
+    hideTimer = setTimeout(()=>hide({x:parseFloat(K.style.left),y:parseFloat(K.style.top)}), 2000);
+  });
+
+  /* ── BOOT ── */
+  setTimeout(appear, 2200); // first appearance 2.2s in
+  scheduleNext();            // next cycle starts after first hide
+
+})();
+
+/* HEART EXPLOSION (used by kitty click) */
+function spawnHearts(x,y){
+  const H=['💖','💕','💗','💓','✨','🌸','🎀'];
+  for(let i=0;i<9;i++){
+    const h=document.createElement('div');h.className='cht';
+    h.textContent=H[Math.floor(Math.random()*H.length)];
+    const ang=(i/9)*Math.PI*2,d=45+Math.random()*65;
+    const ex=Math.cos(ang)*d,ey=Math.sin(ang)*d;
+    const dur=.55+Math.random()*.45;
+    h.style.cssText=`left:${x}px;top:${y}px;font-size:${13+Math.random()*16}px;position:fixed;pointer-events:none;z-index:9991;transition:all ${dur}s cubic-bezier(.34,1.56,.64,1);transform:translate(-50%,-50%) scale(0);opacity:1;`;
+    document.body.appendChild(h);
+    requestAnimationFrame(()=>{
+      h.style.transform=`translate(calc(-50% + ${ex}px), calc(-50% + ${ey}px)) scale(1) rotate(${Math.random()*240}deg)`;
+      setTimeout(()=>{h.style.opacity='0';setTimeout(()=>h.remove(),420)},dur*900);
+    });
+  }
+}
+
+/* ═══════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════ */
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*75);ro.unobserve(e.target)}});
+},{threshold:.07,rootMargin:'0px 0px -28px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+/* ═══════════════════════════════
+   SKILL BARS
+═══════════════════════════════ */
+const so=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){
+    const w=e.target.style.width;e.target.style.width='0';
+    requestAnimationFrame(()=>{e.target.style.transition='width 1.5s cubic-bezier(.4,0,.2,1)';e.target.style.width=w});
+    so.unobserve(e.target);
+  }});
+},{threshold:.3});
+document.querySelectorAll('.sk-fill').forEach(el=>so.observe(el));
+
+/* ═══════════════════════════════
+   ACTIVE NAV
+═══════════════════════════════ */
+const secs=document.querySelectorAll('section[id]');
+const navAs=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  secs.forEach(s=>{if(window.scrollY>=s.offsetTop-100)cur=s.id});
+  navAs.forEach(a=>{
+    const on=a.getAttribute('href')==='#'+cur;
+    a.style.color=on?'var(--pink-deep)':'';
+    a.style.fontWeight=on?'800':'600';
+  });
+},{passive:true});
+
+/* WELCOME */
+setTimeout(()=>showBub('Nyaa~ Welcome! 🌸'),1400);
+</script>
+</body>
+</html>
